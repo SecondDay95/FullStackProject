@@ -25,7 +25,8 @@ public class ProjectTaskController {
     @PostMapping("")
     public ResponseEntity<?> addProjectTaskToBoard(@Valid @RequestBody ProjectTask projectTask, BindingResult result) {
         //Interfejs BindingResult umożliwia filtrowanie rezultatu walidacji (@Valid), czyli raportu o błędzie w miejscu
-        //jego wystąpienia.
+        //jego wystąpienia. Klasa ResponseEntity jest przeznaczona do prezentacji odpowiedzi HTTP. Można dzieki niej
+        //kontrolować wszystko co dotyczy odpowiedzi HTTP: status code, header, body.
 
         //Jeżeli podczas mapowania metody Post wystąpi błąd:
         if (result.hasErrors()) {
@@ -40,5 +41,20 @@ public class ProjectTaskController {
 
         return new ResponseEntity<ProjectTask>(newProjectTask, HttpStatus.CREATED);
     }
+
+    //Dodanie endpointu do pobierania wszystkich danych z serwera (bazy mysql):
+    @GetMapping("/all")
+    public Iterable<ProjectTask> getAllProjectTasks() {
+        return projectTaskService.findAll();
+    }
+
+    //Odwołanie się do konkretnego projektu po numerze Id:
+    @GetMapping("{pt_id}")
+    public ResponseEntity<?> getProjectTaskById(@PathVariable Long pt_id) {
+        //Adnotacja @PathVariable umożliwia wydobycie parametru z adresu URL
+        ProjectTask projectTask = projectTaskService.findById(pt_id);
+        return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);
+    }
+
 
 }

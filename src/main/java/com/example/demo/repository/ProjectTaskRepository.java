@@ -10,4 +10,7 @@ public interface ProjectTaskRepository extends CrudRepository<ProjectTask, Long>
     //Adnotacja @Repository, mówi dla Springa, że ten interfejs odpowiada za dostęp do danych
     //Rozszerzając interfejs przez CrudRepository musimy podać typ obiektu oraz typ klucza głównego (skladowej
     //z adnotacja @ID). CrudRepository umożliwia tworzenie oraz aktualizacje obiektów
+
+    //Deklaracja metody pobierającej obiekty z bazy na bazie id:
+    public ProjectTask getById(Long id);
 }

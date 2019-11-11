@@ -8,12 +8,15 @@ import com.example.demo.repository.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+//Tworzenie obiektu sevice tej klasy
 @Service
 public class ProjectTaskService {
 
+    //Wstrzykiwanie zależności projectTaskRepository do obiektu klasy ProjectTaskService
     @Autowired
     ProjectTaskRepository projectTaskRepository;
 
+    //Metoda umożliwiająca dodanie projektu do bazy mysql
     public ProjectTask saveOrUpdateProjectTask (ProjectTask projectTask) {
 
         if (projectTask.getStatus() == null || projectTask.getStatus() == "") {
@@ -22,5 +25,14 @@ public class ProjectTaskService {
         }
 
         return projectTaskRepository.save(projectTask);
+    }
+
+    //Metoda umożliwiająca odczyt danych z bazy mysql:
+    public Iterable<ProjectTask> findAll() {
+        return projectTaskRepository.findAll();
+    }
+
+    public ProjectTask findById(Long id) {
+        return projectTaskRepository.getById(id);
     }
 }
