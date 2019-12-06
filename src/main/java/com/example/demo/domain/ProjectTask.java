@@ -1,9 +1,8 @@
 package com.example.demo.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -13,12 +12,23 @@ public class ProjectTask {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Summary cannot be blank")
-    private String summary;
+    @NotBlank(message = "Project name cannot be blank")
+    private String name;
 
-    private String acceptanceCriteria;
-    //Składowa status określa gdzie utworzone zadanie znajduje się na tablicy zadań
+    @NotBlank(message = "Project description cannot be blank")
+    private String description;
+
+    @NotBlank(message = "Employee name cannot be blank")
+    private String employee;
+
+    @NotBlank(message = "Number of hours cannot be blank")
+    private String hours;
+
     private String status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
 
     public ProjectTask() {
 
@@ -32,20 +42,20 @@ public class ProjectTask {
         this.id = id;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getName() {
+        return name;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setName(String summary) {
+        this.name = summary;
     }
 
-    public String getAcceptanceCriteria() {
-        return acceptanceCriteria;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAcceptanceCriteria(String acceptanceCriteria) {
-        this.acceptanceCriteria = acceptanceCriteria;
+    public void setDescription(String acceptanceCriteria) {
+        this.description = acceptanceCriteria;
     }
 
     public String getStatus() {
@@ -54,5 +64,21 @@ public class ProjectTask {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
+
+    public String getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(String employee) {
+        this.employee = employee;
     }
 }
